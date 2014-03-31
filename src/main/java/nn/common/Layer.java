@@ -1,9 +1,12 @@
 package nn.common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Layer<R extends EntryPoint<D>, D extends Dendrite, N extends Neuron<?, ?>, F extends INeuronFactory> extends Creator {
+public abstract class Layer<R extends EntryPoint<D>, D extends Dendrite, N extends Neuron<?, ?>, F extends INeuronFactory> extends Creator implements Serializable {
+
+	private static final long serialVersionUID = 3173132590793966813L;
 	protected List<N> neurons = new ArrayList<>();
 	protected List<R> entryPoints = new ArrayList<>();
 

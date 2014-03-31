@@ -1,10 +1,14 @@
 package nn.common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class EntryPoint<D extends Dendrite>  {
+public abstract class EntryPoint<D extends Dendrite> implements Serializable {
+
+	private static final long serialVersionUID = 4258661752947520496L;
+
 	private double signal;
 
 	private List<D> linkedDendrites= new ArrayList<>();

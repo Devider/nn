@@ -1,10 +1,13 @@
 package nn.common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class Neuron <T extends ActivationFunction, D extends Dendrite> extends Creator {
+public abstract class Neuron <T extends ActivationFunction, D extends Dendrite> extends Creator  implements Serializable{
+
+	private static final long serialVersionUID = 3800045839506369870L;
 
 	private T activator = null;
 	

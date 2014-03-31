@@ -4,6 +4,8 @@ import nn.common.Layer;
 
 public class BLayer extends Layer<BEntryPoint, BDendrite, BNeuron, BNeuronFactory> {
 
+	private static final long serialVersionUID = -362799851971581491L;
+
 	public BLayer(int inputCount, int ouputCount, BNeuronFactory factory) {
 		super(inputCount, ouputCount, factory);
 	}

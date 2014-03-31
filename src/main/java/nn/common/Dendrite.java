@@ -1,9 +1,12 @@
 package nn.common;
 
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Random;
 
-public class Dendrite {
+public class Dendrite implements Serializable{
+
+	private static final long serialVersionUID = 2916227411833201179L;
 
 	private static Random generator = new Random();
 	
@@ -15,7 +18,6 @@ public class Dendrite {
 
 	public Dendrite(){
 		weight = generator.nextDouble() - .4;
-//		signal = generator.nextDouble() - .4;
 		signal = 100;
 	}
 

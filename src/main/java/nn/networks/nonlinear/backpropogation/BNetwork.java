@@ -1,16 +1,19 @@
 package nn.networks.nonlinear.backpropogation;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.Arrays;
 
-import nn.common.ActivationFunctions;
-import nn.common.DerivativeActivationFunction;
 import nn.common.INetwork;
 
-public class BNetwork implements INetwork {
+public class BNetwork implements INetwork{
 
+	private static final long serialVersionUID = -8815833917712316294L;
 	private final BLayer[] layers;
 
 	public BNetwork(BNeuronFactory factory, int...layers){
@@ -37,6 +40,10 @@ public class BNetwork implements INetwork {
 		}
 
 		return outs;
+	}
+	
+	public BigDecimal[] roundTest(double...data) {
+		return round(test(data));
 	}
 
 	@Override
@@ -84,55 +91,7 @@ public class BNetwork implements INetwork {
 		return layers[layers.length - 1];
 	}
 
-	public static void main(String[] args) {
-
-		double[][] data = {
-			{0, 0},
-			{0, 1},
-			{1, 0},
-			{1, 1}
-		};
-
-		double results[][] = {
-			{0},
-			{1},
-			{1},
-			{0}
-		};
-
-
-		DerivativeActivationFunction func = ActivationFunctions.SIGMOIDAL;
-//
-//		BNeuron n11 = new BNeuron(func, 1, 1);
-//		n11.setName("u1");
-//		BNeuron n12 = new BNeuron(func, 1, 1);
-//		n12.setName("u2");
-//		BNeuron n13 = new BNeuron(func, 1, 1);
-//		n12.setName("u3");
-//		BLayer layer1 = new BLayer(2, n11, n12, n13);
-//
-//		BNeuron n21 = new BNeuron(func, 1, 1);
-//		n21.setName("u4");
-//
-//		BLayer layer2 = new BLayer(3, n21);
-//
-//		BNetwork bn = new BNetwork(layer1, layer2);
-
-		BNetwork bn = new BNetwork(new BNeuronFactory(func), 2,3,1); /* too simple */ 
-	
-
-		bn.teach(data, results, 1000000);
-		for (int i = 0; i < data.length; i++){
-			System.out.println("Testing: " +
-					Arrays.toString(data[i]) +
-					"\tResponse recieved: " +
-					Arrays.toString(round(bn.test(data[i]))) +
-					"\tResponse expected: " +
-					Arrays.toString(results[i]));
-		}
-	}
-	
-	private static BigDecimal[] round(double[] values) {
+	private BigDecimal[] round(double[] values) {
 		BigDecimal[] result = new BigDecimal[values.length];
 		for (int i = 0; i < values.length; i++){
 			result[i] = new BigDecimal(values[i], new MathContext(2,RoundingMode.HALF_UP));
@@ -144,5 +103,21 @@ public class BNetwork implements INetwork {
 		if (val1.length != val2.length)
 			throw new RuntimeException("Sizes does not mutch!!");
 		return true;
+	}
+	
+	public void save(String filename) throws IOException{
+	    FileOutputStream fos = new FileOutputStream(filename);
+	    ObjectOutputStream oos = new ObjectOutputStream(fos);
+	    oos.writeObject(this);
+	    oos.flush();
+	    oos.close();
+	}
+	
+	public static BNetwork load(String filename) throws Exception{
+		FileInputStream fis = new FileInputStream(filename);
+		ObjectInputStream oin = new ObjectInputStream(fis);
+		BNetwork obj = (BNetwork) oin.readObject();
+		oin.close();
+		return obj;
 	}
 }

@@ -1,6 +1,8 @@
 package nn.common;
 
-public interface INetwork {
+import java.io.Serializable;
+
+public interface INetwork extends Serializable{
 	
 	public double[] test(double...data);
 	
