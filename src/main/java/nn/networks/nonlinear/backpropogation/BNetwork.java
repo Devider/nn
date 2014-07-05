@@ -61,11 +61,15 @@ public class BNetwork implements INetwork{
 		}
 	}
 
-	public void teach(double[] data, double[] targets, int count) {
-		for (int i = 0; i < count; i++){
-				test(data);
-				backpropogate(targets);
-		}
+	public void teach(double[] data, double[] targets) {
+		test(data);
+		backpropogate(targets);
+	}
+	
+	public int getNeuronCountAt(int layer){
+		if (layer > layers.length)
+			throw new IllegalArgumentException("Only " + layers.length + "layers available!");
+		return layers[layer].getNeuronsCount();
 	}
 
 	

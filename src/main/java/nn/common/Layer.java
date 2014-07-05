@@ -9,6 +9,10 @@ public abstract class Layer<R extends EntryPoint<D>, D extends Dendrite, N exten
 	private static final long serialVersionUID = 3173132590793966813L;
 	protected List<N> neurons = new ArrayList<>();
 	protected List<R> entryPoints = new ArrayList<>();
+	
+	public int getNeuronsCount(){
+		return entryPoints.size();
+	}
 
 	@SuppressWarnings("unchecked")
 	public Layer(int inputCount, int ouputCount, F factory) {
