@@ -28,6 +28,21 @@ public class ActivationFunctions {
 		}
 	};
 
+	public static final DerivativeActivationFunction TANH = new DerivativeActivationFunction() {
+
+		private static final long serialVersionUID = 4551843344952168902L;
+
+		@Override
+		public double derivativeFunction(double value) {
+			return (pow2(ch(value)) - pow2(sh(value))) / pow2(ch(value));
+		}
+
+		@Override
+		double activationFunction(double value) {
+			return tanh(value);
+		}
+	};
+
 	public static final ActivationFunction BIPOLAR = new ActivationFunction() {
 
 		private static final long serialVersionUID = -4126066176902407938L;
