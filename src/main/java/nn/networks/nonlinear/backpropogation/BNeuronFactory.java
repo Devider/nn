@@ -14,6 +14,4 @@ public class BNeuronFactory extends NeuronFactory<DerivativeActivationFunction, 
 		DerivativeActivationFunction daf = getFunction();
 		return new BNeuron(daf);
 	}
-
-
 }

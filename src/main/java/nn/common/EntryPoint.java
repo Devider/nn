@@ -25,7 +25,6 @@ public abstract class EntryPoint<D extends Dendrite> implements Serializable {
 
 	public void setSignal(double signal) {
 		this.signal = signal;
-		notifyDendrites();
 	}
 
 	protected List<D> dendrites(){

@@ -48,7 +48,9 @@ public abstract class Layer<R extends EntryPoint<D>, D extends Dendrite, N exten
 		}
 		for (int i = 0; i < entryPoints.size(); i++) {
 			entryPoints.get(i).setSignal(data[i]);
+			entryPoints.get(i).notifyDendrites();
 		}
+		
 		return outs();
 	}
 

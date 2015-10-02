@@ -10,6 +10,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 import nn.common.INetwork;
+import nn.common.utils.MathUtils;
 
 public class BNetwork implements INetwork{
 
@@ -72,19 +73,8 @@ public class BNetwork implements INetwork{
 		return layers[layer].getNeuronsCount();
 	}
 
-	
-	protected double[] diff(double received[], double[] expected){
-		double[] result = new double[received.length];
-		if (check(received, expected)){
-			for (int i = 0; i < received.length; i++){
-				result[i] = expected[i] - received[i];
-			}
-		}
-		return result;
-	}
-
 	protected void backpropogate(double[] data){
-		double[] outs = diff(lastLayer().outs(), data);
+		double[] outs = MathUtils.diff(lastLayer().outs(), data);
 
 		for (int i = layers.length - 1; i >= 0; i--){
 			outs = layers[i].backpropogate(outs);
@@ -101,12 +91,6 @@ public class BNetwork implements INetwork{
 			result[i] = new BigDecimal(values[i], new MathContext(2,RoundingMode.HALF_UP));
 		}
 		return result;
-	}
-
-	private boolean check(double[] val1, double[] val2){
-		if (val1.length != val2.length)
-			throw new RuntimeException("Sizes does not mutch!!");
-		return true;
 	}
 	
 	public void save(String filename) throws IOException{
